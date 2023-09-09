@@ -29,6 +29,7 @@ const {
 const {
   TarefasHorariosController,
 } = require("../controllers/TarefasHorariosController");
+const { viewHomeController } = require("../controllers/viewHomeController");
 
 const router = express.Router();
 
@@ -41,6 +42,8 @@ router.get(
   ViewTarefasColaboradoresController.index
 );
 router.get("/view/tarefas-horarios", ViewTarefasHorariosController.index);
+
+router.get("/", viewHomeController.index)
 
 // API
 router.post("/api/equipes/create", EquipesController.create);

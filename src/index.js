@@ -16,8 +16,6 @@ nunjucks.configure(path.resolve(__dirname, "..", "view"), {
   throwOnUndefined: true,
 });
 app.use(express.json());
-app.get("/", function (req, res) {
-  res.render("pages/index.html");
-});
+
 app.use(router);
 app.listen(1313);
