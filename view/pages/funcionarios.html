@@ -1,0 +1,127 @@
+{% extends "layouts/default.html" %}
+<!--  -->
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h4>Gerenciamento dos funcionarios</h4>
+    <hr />
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Selecione uma equipe:</label>
+            <select name="shift_id" class="form-control" id="btn_shift_id">
+              {%for item in equipes%}
+              <option value="{{item.id}}">{{item.name}}</option>
+              {%endfor%}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Nome:</label>
+            <input
+              name="name"
+              type="text"
+              class="form-control"
+              placeholder="digite o nome do colaborador"
+              required
+              id="btn_name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Telefone:</label>
+            <input
+              name="phone"
+              type="number"
+              class="form-control"
+              placeholder="numero do telefone do colaborador 6193020884"
+              required
+              id="btn_phone"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">E-mail:</label>
+            <input
+              name="email"
+              type="email"
+              class="form-control"
+              placeholder="digite o e-mail do colaborador"
+              required
+              id="btn_email"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn_submit">
+            CADASTRAR
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Situação</th>
+              <th>Phone</th>
+              <th>E-mail</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in funcionarios %}
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.phone}}</td>
+              <td>{{item.email}}</td>
+              {% if item.is_active == 1 %}
+              <td>
+                <span class="label label-success">ON&nbsp</span>
+              </td>
+              {% else %}
+              <td>
+                <span class="label label-danger">OFF</span>
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block script %}
+
+<script>
+  $(document).ready(function () {
+    $("form").submit(function (e) {
+      e.preventDefault();
+      const btn_shift_id = $("#btn_shift_id").val();
+      const btn_name = $("#btn_name").val();
+      const btn_phone = $("#btn_phone").val();
+      const btn_email = $("#btn_email").val();
+
+      console.log(btn_shift_id);
+      axios
+        .post(url_base + "/api/funcionarios/create", {
+          shift_id: btn_shift_id,
+          name: btn_name,
+          email: btn_email,
+          phone: btn_phone,
+        })
+        .then((r) => {
+          if (r.data.affectedRows == 1) {
+            window.location.reload();
+          }
+        });
+    });
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% include 'partials/header.html' %}
+<body>
+  <div class="container theme-showcase" role="main">
+    {% include 'partials/header.html' %}
+    <!--  -->
+    {% block content %} {% endblock %}
+    <!--  -->
+    {% include 'partials/footer.html' %}
+  </div>
+</body>
+{% include 'partials/footer.html' %} {% block script %} {% endblock %}

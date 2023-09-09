@@ -1,0 +1,77 @@
+{% extends "layouts/default.html" %}
+<!--  -->
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h4>Gerenciamento de Horários</h4>
+    <hr />
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Escolha um horário</label>
+            <input
+              type="time"
+              class="form-control"
+              placeholder="Qual tarefa que cadastrar"
+              id="btn_time"
+              name="time"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn_submit">
+            CADASTRAR
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in horarios %}
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.time}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block script %}
+
+<script>
+  $(document).ready(function () {
+    $(function () {
+      $('[data-toggle="popover"]').popover();
+    });
+    $("form").submit(function (e) {
+      e.preventDefault();
+      const btn_time = $("#btn_time").val();
+      axios
+        .post(url_base + "/api/horarios/create", {
+          time: btn_time,
+        })
+        .then((r) => {
+          if (r.data.affectedRows == 1) {
+            window.location.reload();
+          }
+        });
+    });
+  });
+</script>
+
+{% endblock %}

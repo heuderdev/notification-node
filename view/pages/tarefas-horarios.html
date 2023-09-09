@@ -1,0 +1,106 @@
+{% extends "layouts/default.html" %}
+<!--  -->
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <h4>Vincular uma tarefa com o colaborador</h4>
+    <hr />
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">SELECIOONE UMA TAREFA</label>
+            <select
+              name="task_id"
+              class="form-control"
+              aria-label=".form-select-sm example"
+              id="btn_task_id"
+            >
+              {%for item in tasks%}
+              <option value="{{item.id}}">{{item.name}}</option>
+              {%endfor%}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">SELECIONE O FUNCIONÁRIO</label>
+            <select
+              name="schedule_id"
+              class="form-control
+              aria-label=".form-select-sm example"
+              id="btn_schedule_id"
+            >
+              {%for item in horarios%}
+              <option value="{{item.id}}">{{item.time}}</option>
+              {%endfor%}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn_submit">
+            CADASTRAR
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in equipes %}
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              {% if item.is_active == 1 %}
+              <td>
+                <span class="label label-success">ON&nbsp</span>
+              </td>
+              {% else %}
+              <td>
+                <span class="label label-danger">OFF</span>
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+<!--  -->
+{% block script %}
+
+<script>
+  $(document).ready(function () {
+    $("form").submit(function (e) {
+      e.preventDefault();
+      const btn_task_id = $("#btn_task_id").val();
+      const btn_schedule_id = $("#btn_schedule_id").val();
+      axios
+        .post(url_base + "/api/tarefas-horarios/create", {
+          task_id: btn_task_id,
+          schedule_id: btn_schedule_id,
+        })
+        .then((r) => {
+          if (r.data.affectedRows == 1) {
+            window.location.reload();
+          }
+        });
+    });
+  });
+</script>
+
+{% endblock %}

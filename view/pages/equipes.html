@@ -1,0 +1,100 @@
+{% extends "layouts/default.html" %}
+<!--  -->
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <h4>Gerenciamento das Equipes</h4>
+    <hr />
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Nome da Equipe</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="TURNO A, TURNO B, TURNO C, TURNO D"
+              id="btn_name"
+              name="name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Descrição</label>
+            <textarea
+              class="form-control"
+              rows="3"
+              id="btn_description"
+              name="description"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn_submit">
+            CADASTRAR
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in equipes %}
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              {% if item.is_active == 1 %}
+              <td>
+                <span class="label label-success">ON&nbsp</span>
+              </td>
+              {% else %}
+              <td>
+                <span class="label label-danger">OFF</span>
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+<!--  -->
+{% block script %}
+
+<script>
+  $(document).ready(function () {
+    $("form").submit(function (e) {
+      e.preventDefault();
+      const btn_name = $("#btn_name").val();
+      const btn_description = $("#btn_description").val();
+      axios
+        .post(url_base + "/api/equipes/create", {
+          name: btn_name,
+          description: btn_description,
+        })
+        .then((r) => {
+          if (r.data.affectedRows == 1) {
+            window.location.reload();
+          }
+        });
+    });
+  });
+</script>
+
+{% endblock %}
