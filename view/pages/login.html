@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layouts/default.html" %}
+<!--  -->
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<div class="row">
+    <div class="col-md-12">
+        <form action="/login" method="post">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Sistema de cadastro</h5>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="username">E-mail:</label>
+                        <input type="text" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Senha</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <button type="submit" class="btn btn-success">Entrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
-<body>
-    <h1>Login</h1>
-</body>
-
-</html>
+{% endblock %}

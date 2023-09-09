@@ -59,5 +59,6 @@ router.post(
 router.post("/api/tarefas-horarios/create", TarefasHorariosController.create);
 
 router.get("/login", LoginController.index)
+// router.post("/login", LoginController.login)
 
 module.exports = { router };

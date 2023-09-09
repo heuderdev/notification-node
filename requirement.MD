@@ -50,8 +50,8 @@ USE sicoob;
 
 CREATE TABLE users(
   `id` INT(11) AUTO_INCREMENT,
-  `username` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL UNIQUE,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
   `password` VARCHAR(255) NOT NULL,
   `is_active` TINYINT(1) NOT NULL DEFAULT 1,
    `roles` TINYINT(1) NOT NULL DEFAULT 0,
