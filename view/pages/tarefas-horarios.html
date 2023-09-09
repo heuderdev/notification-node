@@ -13,12 +13,7 @@
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">SELECIOONE UMA TAREFA</label>
-            <select
-              name="task_id"
-              class="form-control"
-              aria-label=".form-select-sm example"
-              id="btn_task_id"
-            >
+            <select name="task_id" class="form-control" aria-label=".form-select-sm example" id="btn_task_id">
               {%for item in tasks%}
               <option value="{{item.id}}">{{item.name}}</option>
               {%endfor%}
@@ -26,12 +21,8 @@
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">SELECIONE O FUNCIONÁRIO</label>
-            <select
-              name="schedule_id"
-              class="form-control
-              aria-label=".form-select-sm example"
-              id="btn_schedule_id"
-            >
+            <select name="schedule_id" class="form-control
+              aria-label=" .form-select-sm example" id="btn_schedule_id">
               {%for item in horarios%}
               <option value="{{item.id}}">{{item.time}}</option>
               {%endfor%}
@@ -51,27 +42,29 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Nome</th>
-              <th>Situação</th>
+              <th>Hora</th>
+              <th>Tarefa</th>
             </tr>
           </thead>
           <tbody>
-            {% for item in equipes %}
+            {% for item in schedules_tasks %}
             <tr>
-              <td>{{item.id}}</td>
-              <td>{{item.name}}</td>
-              {% if item.is_active == 1 %}
+              <td>{{item.schedule_id}}</td>
+              <td>{{item.schedule_time}}</td>
               <td>
-                <span class="label label-success">ON&nbsp</span>
+                <button
+                type="button"
+                class="btn btn-xs btn-info"
+                data-toggle="popover"
+                title="Informação"
+                data-content="{{item.task_names}}"
+              >
+                <span class="glyphicon glyphicon-eye-open"></span>
+                Visualizar
+              </button>
               </td>
-              {% else %}
-              <td>
-                <span class="label label-danger">OFF</span>
-              </td>
-              {% endif %}
             </tr>
             {% endfor %}
-            <tr></tr>
           </tbody>
         </table>
       </div>
@@ -85,6 +78,9 @@
 
 <script>
   $(document).ready(function () {
+    $(function () {
+      $('[data-toggle="popover"]').popover();
+    });
     $("form").submit(function (e) {
       e.preventDefault();
       const btn_task_id = $("#btn_task_id").val();

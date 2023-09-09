@@ -11,6 +11,31 @@ class TarefasHorariosDatabase {
       return error;
     }
   }
+
+  static async list() {
+    try {
+      const [schedules_tasks] = await poll.query(`
+      SELECT
+          s.id AS schedule_id,
+          s.time AS schedule_time,
+          GROUP_CONCAT(t.name) AS task_names
+        FROM
+            schedules s
+        LEFT JOIN
+            schedules_tasks st ON s.id = st.schedule_id
+        LEFT JOIN
+            tasks t ON st.task_id = t.id
+        GROUP BY
+            s.id, s.time
+        HAVING
+            task_names IS NOT NULL  
+      `)
+      return schedules_tasks
+    } catch (error) {
+      return error
+    }
+  }
+
 }
 
 module.exports = { TarefasHorariosDatabase };
