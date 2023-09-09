@@ -40,13 +40,25 @@ time: string,
 notifications = {
 
 }
-
+npm install express-session connect-flash
 ```sql
 
 DROP DATABASE IF EXISTS sicoob;
 CREATE DATABASE sicoob;
 
 USE sicoob;
+
+CREATE TABLE users(
+  `id` INT(11) AUTO_INCREMENT,
+  `username` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+   `roles` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id)
+);
 
 CREATE TABLE shifts(
   `id` INT(11) AUTO_INCREMENT,
