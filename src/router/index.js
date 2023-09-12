@@ -30,7 +30,9 @@ const {
   TarefasHorariosController,
 } = require("../controllers/TarefasHorariosController");
 const { viewHomeController } = require("../controllers/viewHomeController");
-const { GerenciamentoControler } = require("../controllers/GerenciamentoControler");
+const {
+  GerenciamentoControler,
+} = require("../controllers/GerenciamentoControler");
 const { LoginController } = require("../controllers/LoginController");
 
 const router = express.Router();
@@ -45,10 +47,11 @@ router.get(
 );
 router.get("/view/tarefas-horarios", ViewTarefasHorariosController.index);
 
-router.get("/", viewHomeController.index)
-router.get("/sicoob/:id", GerenciamentoControler.view)
+router.get("/", viewHomeController.index);
+router.get("/sicoob/:id", GerenciamentoControler.view);
 // API
 router.post("/api/equipes/create", EquipesController.create);
+router.post("/api/equipes/update", EquipesController.update);
 router.post("/api/funcionarios/create", FuncionariosController.create);
 router.post("/api/tarefas/create", TarefasController.create);
 router.post("/api/horarios/create", HorariosController.create);
@@ -58,7 +61,7 @@ router.post(
 );
 router.post("/api/tarefas-horarios/create", TarefasHorariosController.create);
 
-router.get("/login", LoginController.index)
+router.get("/login", LoginController.index);
 // router.post("/login", LoginController.login)
 
 module.exports = { router };

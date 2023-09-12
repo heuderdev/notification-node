@@ -21,6 +21,18 @@ class EquipesDatabase {
       return error;
     }
   }
+
+  static async update(id, is_active) {
+    try {
+      const [shifts] = await poll.query(
+        "UPDATE shifts SET is_active=? WHERE id=?",
+        [is_active, id]
+      );
+      return shifts;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = { EquipesDatabase };

@@ -14,7 +14,12 @@ class FuncionariosDatabase {
     try {
       const [contributions] = await poll.query(
         "INSERT INTO contributions (shift_id,name,phone,email) VALUES (?,?,?,?)",
-        [shift_id, name, phone, email]
+        [
+          shift_id,
+          name.trim().toLowerCase(),
+          phone.trim().toLowerCase(),
+          email.trim().toLowerCase(),
+        ]
       );
       return contributions;
     } catch (error) {

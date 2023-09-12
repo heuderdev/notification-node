@@ -46,26 +46,26 @@
             <tr>
               <th>#</th>
               <th>Nome</th>
-              <th>Situação</th>
+              <th>Situaçãoe</th>
             </tr>
           </thead>
           <tbody>
             {% for item in equipes %}
-            <tr>
+            <tr
+              style="cursor: pointer"
+              id="equipe_id"
+              data-equipe="{{item.id}}"
+              data-situacao="{{item.is_active}}"
+            >
               <td>{{item.id}}</td>
               <td>{{item.name}}</td>
               {% if item.is_active == 1 %}
-              <td>
-                <span class="label label-success">ON&nbsp</span>
-              </td>
+              <td><span class="label label-success">ON&nbsp</span></td>
               {% else %}
-              <td>
-                <span class="label label-danger">OFF</span>
-              </td>
+              <td><span class="label label-danger">OFF</span></td>
               {% endif %}
             </tr>
             {% endfor %}
-            <tr></tr>
           </tbody>
         </table>
       </div>
@@ -94,6 +94,24 @@
           }
         });
     });
+
+    document.querySelectorAll("#equipe_id").forEach((row) =>
+      row.addEventListener("click", function () {
+        let id_equipe = this.getAttribute("data-equipe");
+        let situacao = this.getAttribute("data-situacao");
+        axios
+          .post(url_base + "/api/equipes/update", {
+            id: id_equipe,
+            situacao: situacao,
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .finally(() => {
+            window.location.reload();
+          });
+      })
+    );
   });
 </script>
 
