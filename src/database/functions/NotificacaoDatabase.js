@@ -1,9 +1,9 @@
-const { poll } = require("../connection")
+const { poll } = require("../connection");
 
 class NotificacaoDatabase {
-    static async ListAll() {
-        try {
-            const [notifications] = await poll.query(`SELECT 
+  static async ListAll() {
+    try {
+      const [notifications] = await poll.query(`SELECT 
         N.id AS notifications_id,
          C.name AS contributions_name,
          N.code_uuid AS notifications_code_uuid,
@@ -15,15 +15,14 @@ class NotificacaoDatabase {
       FROM  notifications AS N
              JOIN tasks AS T ON T.id = N.task_id
              JOIN contributions AS C ON C.id = N.contributor_id
-         ORDER BY N.was_verified DESC
+         ORDER BY N.created_at DESC
          LIMIT 100
-         `)
-         return notifications
-        } catch (error) {
-            return error
-        }
+         `);
+      return notifications;
+    } catch (error) {
+      return error;
     }
+  }
 }
 
-
-module.exports = { NotificacaoDatabase }
+module.exports = { NotificacaoDatabase };
